@@ -1,13 +1,14 @@
 # ---------- Build stage ----------
-FROM eclipse-temurin:21-jdk AS build
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 WORKDIR /app
 
-COPY mvnw* pom.xml ./
-COPY .mvn .mvn
-RUN ./mvnw -q -DskipTests dependency:go-offline
+# Bağımlılık cache'i için önce POM
+COPY pom.xml .
+RUN mvn -q -DskipTests dependency:go-offline
 
+# Kaynak kodu kopyala ve paketle
 COPY src src
-RUN ./mvnw -q -DskipTests package
+RUN mvn -q -DskipTests package
 
 # ---------- Run stage ----------
 FROM eclipse-temurin:21-jre
@@ -16,7 +17,10 @@ ENV TZ=Europe/Istanbul
 ENV PORT=8080
 ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0"
 
-COPY --from=build /app/target /app/target
+# Build’ten çıkan jar’ı tek isimle kopyala
+COPY --from=build /app/target/*.jar /app/app.jar
+
+# Entrypoint
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
