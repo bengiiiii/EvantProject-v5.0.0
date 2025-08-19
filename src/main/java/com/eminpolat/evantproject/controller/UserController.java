@@ -5,6 +5,7 @@ import com.eminpolat.evantproject.entites.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.annotation.security.PermitAll;
 
 import java.util.List;
 import java.util.Optional;
