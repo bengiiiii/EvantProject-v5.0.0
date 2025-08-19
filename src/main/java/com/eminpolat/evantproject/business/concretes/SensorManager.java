@@ -20,7 +20,7 @@ public class SensorManager implements SensorService {
     private final SensorRepository sensorRepository;
     private final RestTemplate restTemplate;
     private final String url =
-        "https://isi-nem-88c9f-default-rtdb.europe-west1.firebasedatabase.app/sensor101.json";
+        "https://isi-nem-88c9f-default-rtdb.europe-west1.firebasedatabase.app/sensor_data/sensor101.json";
 
     public SensorManager(SensorRepository sensorRepository, RestTemplate restTemplate) {
         this.sensorRepository = sensorRepository;
