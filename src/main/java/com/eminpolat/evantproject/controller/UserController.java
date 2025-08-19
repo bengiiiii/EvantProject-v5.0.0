@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@PermitAll   
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
+      
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAll();
